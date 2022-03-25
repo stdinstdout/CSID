@@ -5,9 +5,8 @@ import dash_bootstrap_components as dbc
 from extra_functions import parse_cols_name, parse_df_from_content
 from clustering_functions import do_pipeline
 
-app = Dash('csid-dash-app', 
-            external_stylesheets=[dbc.themes.BOOTSTRAP],
-            suppress_callback_exceptions=True)
+app = Dash('csid-dash-app', external_stylesheets=[dbc.themes.BOOTSTRAP])
+
 app.title = 'CSID'
 
 occ_card = [
@@ -22,7 +21,7 @@ occ_card = [
                        style={
                            'min-height': '38px'
                        }),
-            dbc.FormText("Текст меолким шрифтом"),
+            dbc.FormText("csv, txt file format only"),
         ],
     ),
     dbc.CardBody(
@@ -123,6 +122,7 @@ def do_clustering(n_clicks, contents, filename, species_name, epsilon, lat, lon)
         'Было ' + str(before_len) + ' точек | Стало ' + str(after_len) + ' точек.'
     except Exception as ex:
         return None, True, 'Downloading Error', str(ex)
+
 
 
 
