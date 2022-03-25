@@ -109,15 +109,18 @@ def do_clustering(n_clicks, contents, filename, species_name, epsilon, lat, lon)
 
     try:
         df = parse_df_from_content(contents, filename)
+        before_len = len(df)
     except Exception as ex:
         return None, True, 'Parse content error2', str(ex)
     try:
         df = do_pipeline(df, species_name, lon, lat, epsilon)
+        after_len = len(df)
     except Exception as ex:
         return None, True, 'Custering Error', str(ex)
 
     try:
-        return dcc.send_data_frame(df.to_csv, str(species_name)+".csv", index=False), False, None, None
+        return dcc.send_data_frame(df.to_csv, str(species_name)+".csv", index=False), True, 'Коррекция прошла успешно', \
+        'Было ' + str(before_len) + ' точек | Стало ' + str(after_len) + ' точек.'
     except Exception as ex:
         return None, True, 'Downloading Error', str(ex)
 
